@@ -35,7 +35,10 @@ describe("git review context", () => {
 
   it("uses explicit branch target with base ref", () => {
     const repo = makeTempRepo();
-    execFileSync("git", ["checkout", "-b", "feature"], { cwd: repo });
+    execFileSync("git", ["checkout", "-b", "feature"], {
+      cwd: repo,
+      stdio: "ignore",
+    });
     fs.writeFileSync(path.join(repo, "feature.txt"), "feature\n", "utf8");
     execFileSync("git", ["add", "feature.txt"], { cwd: repo });
     execFileSync("git", ["commit", "-m", "feature"], { cwd: repo });
