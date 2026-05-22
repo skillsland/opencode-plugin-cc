@@ -1,0 +1,73 @@
+{
+  "name": "opencode-plugin-cc",
+  "version": "0.1.0",
+  "description": "OpenCode plugin for Claude Code",
+  "license": "MIT",
+  "author": "Skills Land",
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/skillsland/opencode-plugin-cc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/skillsland/opencode-plugin-cc/issues"
+  },
+  "homepage": "https://github.com/skillsland/opencode-plugin-cc#readme",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "pnpm run clean && tsdown",
+    "dev": "tsx --watch src/index.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "pnpm run check && changeset publish",
+    "commit": "cz",
+    "check": "pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build",
+    "prepack": "pnpm run check"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "@opencode-ai/plugin": "^1.15.3"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.31.0",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.19.19",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^10.4.0",
+    "prettier": "3.8.3",
+    "tsdown": "^0.22.0",
+    "tsx": "^4.22.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.3",
+    "vitest": "^4.1.6"
+  }
+}
