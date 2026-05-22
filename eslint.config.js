@@ -22,7 +22,9 @@ export default defineConfig(
         "error",
         { prefer: "type-imports" },
       ],
+      "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/no-empty-object-type": "off",
+      "no-control-regex": "off",
     },
   },
 );
