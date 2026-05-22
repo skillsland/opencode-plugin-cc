@@ -1,7 +1,7 @@
 {
   "name": "opencode-plugin-cc",
   "version": "0.1.0",
-  "description": "OpenCode plugin for Claude Code",
+  "description": "Use OpenCode from Claude Code to review code or delegate tasks.",
   "license": "MIT",
   "author": "Skills Land",
   "type": "module",
@@ -26,7 +26,12 @@
     }
   },
   "files": [
+    ".claude-plugin",
+    "agents",
+    "commands",
     "dist",
+    "hooks",
+    "prompts",
     "README.md",
     "LICENSE"
   ],
@@ -52,9 +57,6 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
-  },
-  "dependencies": {
-    "@opencode-ai/plugin": "^1.15.3"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
