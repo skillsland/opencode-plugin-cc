@@ -1,5 +1,9 @@
 # opencode-plugin-cc
 
+[![CI](https://github.com/skillsland/opencode-plugin-cc/actions/workflows/ci.yml/badge.svg)](https://github.com/skillsland/opencode-plugin-cc/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/opencode-plugin-cc.svg)](https://www.npmjs.com/package/opencode-plugin-cc)
+![license](https://img.shields.io/npm/l/opencode-plugin-cc)
+
 Use OpenCode from inside Claude Code for code reviews or delegated tasks.
 
 This plugin mirrors the workflow shape of `codex-plugin-cc`, but delegates to the local `opencode` CLI.
