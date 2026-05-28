@@ -1,0 +1,23 @@
+{
+  "name": "skillsland-opencode",
+  "owner": {
+    "name": "Skills Land"
+  },
+  "metadata": {
+    "description": "OpenCode plugins to use in Claude Code for delegation and code review.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "opencode",
+      "description": "Use OpenCode from Claude Code to review code or delegate tasks.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Skills Land"
+      },
+      "source": "./",
+      "category": "Development workflows",
+      "tags": ["opencode", "code-review", "delegation", "claude-code"]
+    }
+  ]
+}

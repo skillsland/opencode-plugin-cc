@@ -18,25 +18,59 @@ This plugin mirrors the workflow shape of `codex-plugin-cc`, but delegates to th
 ## Requirements
 
 - Node.js 22.18 or newer
-- pnpm 10.33 or newer for local development
 - OpenCode CLI installed and authenticated
 
-Install OpenCode:
+## Install
+
+Add the marketplace in Claude Code:
+
+```text
+/plugin marketplace add skillsland/opencode-plugin-cc
+```
+
+Install the plugin:
+
+```text
+/plugin install opencode@skillsland-opencode
+```
+
+Reload plugins:
+
+```text
+/reload-plugins
+```
+
+Then run:
+
+```text
+/opencode:setup
+```
+
+`/opencode:setup` will tell you whether Node.js, OpenCode, and OpenCode authentication are ready.
+
+If you need to install OpenCode, use:
 
 ```sh
 curl -fsSL https://opencode.ai/install | bash
 ```
 
-Log in to a provider:
-
-```sh
-opencode providers login
-```
-
-Then run in Claude Code:
+If OpenCode is installed but not logged in yet, run:
 
 ```text
-/opencode:setup
+!opencode providers login
+```
+
+After install, you should see:
+
+- the slash commands listed below
+- the `opencode:opencode-rescue` subagent in `/agents`
+
+One simple first run is:
+
+```text
+/opencode:review --background
+/opencode:status
+/opencode:result
 ```
 
 ## Usage
