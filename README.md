@@ -165,3 +165,7 @@ Useful scripts:
 - `pnpm run format` - format the repo with Prettier
 - `pnpm run changeset` - create a Changesets release note
 - `pnpm run commit` - write a Conventional Commit with Commitizen
+
+## License
+
+[MIT](LICENSE)
