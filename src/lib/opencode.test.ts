@@ -23,7 +23,7 @@ function withFakeOpenCode<T>(fn: (cwd: string) => T | Promise<T>): Promise<T> {
       "const args = process.argv.slice(2);",
       "if (args.includes('--version')) { console.log('9.9.9'); process.exit(0); }",
       "if (args[0] === 'providers' && args[1] === 'list') { console.log('└  1 credentials'); process.exit(0); }",
-      "if (args[0] === 'run') { console.log('OpenCode handled: ' + args[args.length - 1]); console.log('sessionId: fake-session'); process.exit(0); }",
+      "if (args[0] === 'run') { console.log('OpenCode args: ' + JSON.stringify(args)); console.log('OpenCode handled: ' + args[args.length - 1]); console.log('sessionId: fake-session'); process.exit(0); }",
       "console.error('unexpected args ' + JSON.stringify(args));",
       "process.exit(1);",
       "",
@@ -66,7 +66,21 @@ describe("opencode CLI wrapper", () => {
       });
       expect(result.status).toBe(0);
       expect(result.rawOutput).toContain("OpenCode handled: inspect this");
+      expect(result.rawOutput).toContain('"--agent","build"');
       expect(result.sessionId).toBe("fake-session");
+    });
+  });
+
+  it("preserves an explicit agent override", async () => {
+    await withFakeOpenCode(async (cwd) => {
+      const result = await runOpenCode({
+        cwd,
+        title: "Test",
+        prompt: "inspect this",
+        agent: "plan",
+      });
+      expect(result.status).toBe(0);
+      expect(result.rawOutput).toContain('"--agent","plan"');
     });
   });
 });

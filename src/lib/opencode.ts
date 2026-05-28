@@ -1,6 +1,8 @@
 import { runCommand, runStreamingCommand, stripAnsi } from "./process.js";
 import type { Availability, StreamEvent } from "./process.js";
 
+export const DEFAULT_OPENCODE_AGENT = "build";
+
 export type OpenCodeRunRequest = {
   cwd: string;
   prompt: string;
@@ -122,7 +124,13 @@ export async function runOpenCode(
   const args = ["run", "--dir", request.cwd, "--title", request.title];
   pushIfValue(args, "--model", request.model);
   pushIfValue(args, "--variant", request.variant);
-  pushIfValue(args, "--agent", request.agent);
+  pushIfValue(
+    args,
+    "--agent",
+    request.agent ??
+      process.env.OPENCODE_COMPANION_DEFAULT_AGENT ??
+      DEFAULT_OPENCODE_AGENT,
+  );
   if (request.sessionId) {
     args.push("--session", request.sessionId);
   } else if (request.continueLast) {

@@ -50,6 +50,8 @@ Then run:
 
 `/opencode:setup` will tell you whether Node.js, OpenCode, and OpenCode authentication are ready.
 
+Plugin runs use OpenCode's built-in `build` agent by default so custom OpenCode primary-agent configuration cannot break basic commands. Pass `--agent <name>` on a command when you want another OpenCode agent.
+
 If you need to install OpenCode, use:
 
 ```sh
