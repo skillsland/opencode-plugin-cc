@@ -15,7 +15,10 @@
       "author": {
         "name": "Skills Land"
       },
-      "source": "./",
+      "source": {
+        "source": "npm",
+        "package": "opencode-plugin-cc"
+      },
       "category": "Development workflows",
       "tags": ["opencode", "code-review", "delegation", "claude-code"]
     }

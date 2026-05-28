@@ -34,6 +34,8 @@ Install the plugin:
 /plugin install opencode@skillsland-opencode
 ```
 
+The marketplace entry installs the published `opencode-plugin-cc` npm package, so the package must be published before this command can install a working plugin.
+
 Reload plugins:
 
 ```text
