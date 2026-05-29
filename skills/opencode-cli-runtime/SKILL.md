@@ -1,3 +1,7 @@
+---
+description: Forward Claude Code rescue requests into the OpenCode companion runtime.
+---
+
 # OpenCode CLI Runtime
 
 Use this skill only when forwarding a Claude Code request into the OpenCode companion runtime.

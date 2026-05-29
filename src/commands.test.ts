@@ -6,6 +6,30 @@ import { describe, expect, it } from "vitest";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
+type PackageJson = {
+  name: string;
+  version: string;
+};
+
+type PluginJson = {
+  name: string;
+  version: string;
+};
+
+type MarketplaceJson = {
+  metadata: {
+    version: string;
+  };
+  plugins: {
+    name: string;
+    version: string;
+    source: {
+      source: string;
+      package: string;
+    };
+  }[];
+};
+
 function read(relativePath: string): string {
   return fs.readFileSync(path.join(ROOT, relativePath), "utf8");
 }
@@ -52,5 +76,29 @@ describe("Claude Code plugin files", () => {
     expect(hooks).toMatch(/SessionEnd/);
     expect(hooks).toMatch(/Stop/);
     expect(hooks).toMatch(/stop-review-gate-hook\.mjs/);
+  });
+
+  it("keeps published package and marketplace versions in sync", () => {
+    const packageJson = JSON.parse(read("package.json")) as PackageJson;
+    const pluginJson = JSON.parse(
+      read(".claude-plugin/plugin.json"),
+    ) as PluginJson;
+    const marketplaceJson = JSON.parse(
+      read(".claude-plugin/marketplace.json"),
+    ) as MarketplaceJson;
+    const marketplacePlugin = marketplaceJson.plugins.find(
+      (plugin) => plugin.name === pluginJson.name,
+    );
+
+    expect(pluginJson.version).toBe(packageJson.version);
+    expect(marketplaceJson.metadata.version).toBe(packageJson.version);
+    expect(marketplacePlugin).toMatchObject({
+      name: pluginJson.name,
+      version: packageJson.version,
+      source: {
+        source: "npm",
+        package: packageJson.name,
+      },
+    });
   });
 });
