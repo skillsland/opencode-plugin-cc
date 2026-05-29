@@ -50,7 +50,7 @@ Then run:
 
 `/opencode:setup` will tell you whether Node.js, OpenCode, and OpenCode authentication are ready.
 
-Plugin runs use OpenCode's built-in `build` agent by default so custom OpenCode primary-agent configuration cannot break basic commands. Pass `--agent <name>` on a command when you want another OpenCode agent.
+Plugin runs use OpenCode's built-in `build` agent in `--pure` mode by default so external OpenCode plugins cannot change the agent type or break basic commands. Pass `--agent <name>` on a command when you want another primary OpenCode agent. Set `OPENCODE_COMPANION_PURE=0` before launching Claude Code if you explicitly want OpenCode plugin loading for companion runs.
 
 If you need to install OpenCode, use:
 

@@ -2,6 +2,7 @@ import { runCommand, runStreamingCommand, stripAnsi } from "./process.js";
 import type { Availability, StreamEvent } from "./process.js";
 
 export const DEFAULT_OPENCODE_AGENT = "build";
+export const OPENCODE_COMPANION_PURE_ENV = "OPENCODE_COMPANION_PURE";
 
 export type OpenCodeRunRequest = {
   cwd: string;
@@ -13,6 +14,7 @@ export type OpenCodeRunRequest = {
   sessionId?: string | null | undefined;
   continueLast?: boolean | undefined;
   dangerouslySkipPermissions?: boolean | undefined;
+  pure?: boolean | undefined;
   onEvent?: ((event: StreamEvent) => void) | undefined;
 };
 
@@ -118,10 +120,25 @@ function parseSessionId(output: string): string | null {
   return null;
 }
 
+function shouldUsePureMode(request: OpenCodeRunRequest): boolean {
+  if (request.pure !== undefined) {
+    return request.pure;
+  }
+  const envValue = process.env[OPENCODE_COMPANION_PURE_ENV];
+  if (envValue == null) {
+    return true;
+  }
+  return !["0", "false", "no", "off"].includes(envValue.toLowerCase());
+}
+
 export async function runOpenCode(
   request: OpenCodeRunRequest,
 ): Promise<OpenCodeRunResult> {
-  const args = ["run", "--dir", request.cwd, "--title", request.title];
+  const args = ["run"];
+  if (shouldUsePureMode(request)) {
+    args.push("--pure");
+  }
+  args.push("--dir", request.cwd, "--title", request.title);
   pushIfValue(args, "--model", request.model);
   pushIfValue(args, "--variant", request.variant);
   pushIfValue(

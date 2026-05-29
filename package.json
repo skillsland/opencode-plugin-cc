@@ -1,6 +1,6 @@
 {
   "name": "opencode-plugin-cc",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Use OpenCode from Claude Code to review code or delegate tasks.",
   "license": "MIT",
   "author": "Skills Land",

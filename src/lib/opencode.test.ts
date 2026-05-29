@@ -57,7 +57,7 @@ describe("opencode CLI wrapper", () => {
     });
   });
 
-  it("runs opencode and captures output plus session id", async () => {
+  it("runs opencode in pure mode and captures output plus session id", async () => {
     await withFakeOpenCode(async (cwd) => {
       const result = await runOpenCode({
         cwd,
@@ -66,6 +66,7 @@ describe("opencode CLI wrapper", () => {
       });
       expect(result.status).toBe(0);
       expect(result.rawOutput).toContain("OpenCode handled: inspect this");
+      expect(result.rawOutput).toContain('"--pure"');
       expect(result.rawOutput).toContain('"--agent","build"');
       expect(result.sessionId).toBe("fake-session");
     });
@@ -80,7 +81,45 @@ describe("opencode CLI wrapper", () => {
         agent: "plan",
       });
       expect(result.status).toBe(0);
+      expect(result.rawOutput).toContain('"--pure"');
       expect(result.rawOutput).toContain('"--agent","plan"');
     });
+  });
+
+  it("allows pure mode to be disabled explicitly", async () => {
+    await withFakeOpenCode(async (cwd) => {
+      const result = await runOpenCode({
+        cwd,
+        title: "Test",
+        prompt: "inspect this",
+        pure: false,
+      });
+      expect(result.status).toBe(0);
+      expect(result.rawOutput).not.toContain('"--pure"');
+      expect(result.rawOutput).toContain('"--agent","build"');
+    });
+  });
+
+  it("allows pure mode to be disabled by environment", async () => {
+    const previousPure = process.env.OPENCODE_COMPANION_PURE;
+    process.env.OPENCODE_COMPANION_PURE = "0";
+    try {
+      await withFakeOpenCode(async (cwd) => {
+        const result = await runOpenCode({
+          cwd,
+          title: "Test",
+          prompt: "inspect this",
+        });
+        expect(result.status).toBe(0);
+        expect(result.rawOutput).not.toContain('"--pure"');
+        expect(result.rawOutput).toContain('"--agent","build"');
+      });
+    } finally {
+      if (previousPure === undefined) {
+        delete process.env.OPENCODE_COMPANION_PURE;
+      } else {
+        process.env.OPENCODE_COMPANION_PURE = previousPure;
+      }
+    }
   });
 });
